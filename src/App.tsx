@@ -20,12 +20,13 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Google Analytics - Espacio para código de seguimiento
-    // Insertar aquí el código de Google Analytics cuando esté disponible
-    // Ejemplo:
-    // window.gtag('config', 'GA_MEASUREMENT_ID', {
-    //   page_path: currentPage,
-    // });
+    // Envía un evento a Google Analytics cada vez que la página cambia
+    if (window.gtag) {
+      window.gtag('config', import.meta.env.VITE_GA_TRACKING_ID, {
+        page_path: `/${currentPage}`,
+        page_title: currentPage,
+      });
+    }
     
     console.log("Página visitada:", currentPage);
   }, [currentPage]);
@@ -51,17 +52,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Google Analytics Script - Insertar en producción */}
-      {/* 
-      <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-      </script>
-      */}
-      
       <Header currentPage={currentPage} onNavigate={handleNavigate} />
       <main>{renderPage()}</main>
       
@@ -69,8 +59,8 @@ export default function App() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 class="text-white mb-4">Teatro Lux</h3>
-              <p class="text-sm text-gray-400">
+              <h3 className="text-white mb-4">Teatro Lux</h3>
+              <p className="text-sm text-gray-400">
                 Desde 1950 llevando cultura y entretenimiento de calidad a todos los argentinos.
               </p>
             </div>
